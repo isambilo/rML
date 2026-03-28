@@ -63,3 +63,6 @@ The dataset is static, and the modeling procedure is deterministic. Running the 
 - The dataset URL remains unchanged
 - The Python libraries are up to date
 - The notebook is executed in order without skipping cells
+
+NOTE: Use of GenAI
+GenAI has been used in this assignment to support generation, debugging, and correcting Python coding errors. No other external help, consultancy, or support was sought in completing the assignment as required by instructions given in Lecture 01 or Responsible Machine Learning course.
