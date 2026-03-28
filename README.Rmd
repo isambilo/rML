@@ -28,7 +28,7 @@ Python Libraries used
 
 ```
 
-# Python Lybrary
+# Python Library
 
 The project relies on a set of core scientific‑computing and data‑analysis libraries:
 - pandas — data cleaning, filtering, transformation, and tabulation
