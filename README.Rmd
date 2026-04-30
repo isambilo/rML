@@ -1,68 +1,72 @@
 ---
 title: "README"
 author: "Sunee Rakotonindriana"
-date: "2026-03-27"
+date: "2026-04-22"
 output: html_document
 ---
 
+# COMPAS Recidivism Analysis - Revised Responsible ML Workflow
+
+This notebook reproduces and extends the COMPAS lecture workflow across Sessions 1-3:
+
+- **Session 1 (Alignment):** COMPAS data cleaning, EDA, retrospective explanatory GLM replication, threshold/calibration diagnostics, and impossibility-theorem context.
+- **Session 2 (Transparency):** leakage-free replacement model plus LIME, SHAP, and DiCE for high-risk/low-risk Black and White individuals.
+- **Session 3 (Algorithmic Harm):** fairness audit with AIR/ME/SMD, intersectional analysis, proxy-discrimination diagnostics, FPR/FNR z-tests, practical significance checks, individual-fairness spot-check, and compliance memo reporting.
+
+## What Was Revised
+
+The notebook was updated to align more closely with lecture expectations:
+
+1. Added explicit **retrospective vs prospective framing**:
+   - Session 1 GLM remains a retrospective explanatory replication.
+   - Session 2/3 replacement-model audit excludes future-outcome leakage.
+2. Removed `two_year_recid` from replacement-model features to avoid target leakage.
+3. Added **COMPAS threshold analysis** (`decile_score >= 7`) and race-level error-rate reporting.
+4. Added **base-rate by race** table and calibration-by-decile outputs to support impossibility-theorem interpretation.
+5. Updated explainability section to use **four individuals** (highest/lowest Black and White).
+6. Added improved **LIME-vs-SHAP mapping and consistency summaries** per individual.
+7. Updated DiCE with:
+   - unrestricted immutable-feature audit, and
+   - restricted actionable recourse (`priors_count`, `crime_factor` only).
+8. Updated fairness audit to validate **manual AIR/ME vs solas-ai outputs** for race and sex.
+9. Expanded proxy-discrimination checks to compare both **AIR and FPR/FNR** with-vs-without-race models.
+10. Added **individual fairness spot-check** using cross-race nearest-neighbor prediction gaps.
+11. Updated governance/compliance narratives to align comments with computed outputs and practical-significance policy thresholds.
+
+## Libraries Used
+
+- `pandas`, `numpy` - data processing and numerical computation
+- `statsmodels` - logistic regression diagnostics
+- `scikit-learn` - pipelines, train/test workflows, classifiers, metrics
+- `matplotlib`, `seaborn` - charts and publication-quality figures
+- `lime` - local post-hoc explanations
+- `shap` - global/local Shapley-based explanations
+- `dice-ml` - counterfactual recourse analysis
+- `solas-ai` / `solas_disparity` - legally grounded disparity metrics
+
+## Reproducibility Instructions
+
+1. Install required dependencies (or use your existing course environment):
+
+```bash
+pip install pandas numpy statsmodels scikit-learn matplotlib seaborn lime shap dice-ml solas-ai
 ```
-COMPAS Recidivism Analysis — Project Overview
 
-```
+2. Open and run `COMPAS_Analysis - Test.ipynb` from top to bottom.
 
-# COMPAS Recidivism Analysis - Full Python Implementation
+3. Keep execution order intact (several downstream cells depend on objects created in earlier assignment sections).
 
-This project replicates the full analytical workflow used in ProPublica’s COMPAS investigation, translated from R into Python. The goal is to evaluate whether the COMPAS risk‑assessment algorithm exhibits racial disparities in how it predicts recidivism. The analysis follows a structured pipeline:
-- Load and clean the original COMPAS dataset
-- Reproduce all preprocessing steps used in the R script
-- Conduct exploratory data analysis to understand demographic and score distributions
-- Fit a logistic regression model predicting high COMPAS scores
-- Evaluate model performance using confusion matrices and error rates
-- Compare false positive and false negative rates across racial groups
-- Quantify disparities relative to Caucasian defendants
-The final output mirrors the analytical insights of the R workflow while demonstrating how to implement the same methodology in Python.
+4. Review generated narrative cells:
+   - governance memo (Session 2),
+   - compliance memo (Session 3).
 
+## Notes on Scope and Interpretation
 
-```
-Python Libraries used
+- The notebook is an instructional fairness/transparency audit workflow and not a production sentencing tool.
+- Some subgroups have small sample sizes; disparity estimates for those groups should be interpreted with caution.
+- Post-hoc explanations (LIME/SHAP/DiCE) are diagnostic tools and do not establish causality by themselves.
+- Practical significance uses a 10 percentage-point threshold for governance escalation in this coursework workflow.
 
-```
+## Declaration
 
-# Python Library
-
-The project relies on a set of core scientific‑computing and data‑analysis libraries:
-- pandas — data cleaning, filtering, transformation, and tabulation
-- numpy — numerical operations and vectorized calculations
-- statsmodels — logistic regression modeling and statistical summaries
-- matplotlib — visualization of distributions and score patterns
-- seaborn — enhanced statistical plotting for EDA
-- warnings — suppressing irrelevant output during model fitting
-These libraries collectively replicate the functionality of R packages such as dplyr, ggplot2, and glm.
-
-
-```
-Reproducability
-
-```
-# Instructions for Reproducting Results
-
-1. Set up your environment
-Install the required Python packages if they are not already available:
-
-pip install pandas numpy statsmodels matplotlib seaborn
-
-2. Load the dataset
-The analysis uses the publicly available COMPAS dataset hosted on GitHub. No local files are required.
-
-3. Run the notebook
-Each cell in the notebook corresponds to a step in the R workflow.
-Running the notebook from top to bottom will reproduce all results.
-
-4. Ensure reproducibility
-The dataset is static, and the modeling procedure is deterministic. Running the notebook on any standard Python environment (Colab, Jupyter, VS Code, etc.) will yield the same outputs as long as:
-- The dataset URL remains unchanged
-- The Python libraries are up to date
-- The notebook is executed in order without skipping cells
-
-NOTE: Use of GenAI
-GenAI has been used in this assignment to support generation, debugging, and correcting Python coding errors. No other external help, consultancy, or support was sought in completing the assignment as required by instructions given in Lecture 01 or Responsible Machine Learning course.
+GenAI was used to support code refinement, debugging, and documentation edits. All analytical decisions and final interpretation were reviewed and curated to match the course lecture framework and assignment requirements.
